@@ -1,5 +1,5 @@
 
-# How to instal Grafana file while permission denied
+# How to install Grafana file while permission denied
 
 ## Providing permission
 ``` bash  sudo chmod +x install_grafana.sh```
