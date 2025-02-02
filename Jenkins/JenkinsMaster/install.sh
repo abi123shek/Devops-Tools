@@ -1,4 +1,26 @@
+#!/bin/bash
 
-
+# this is for linux(debain package installation) 
 sudo apt-get update
-sudo
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install jenkins
+
+# installing java run time to run jenkins server
+sudo apt update
+sudo apt install fontconfig openjdk-17-jre
+java -version
+openjdk version "17.0.13" 2024-10-15
+OpenJDK Runtime Environment (build 17.0.13+11-Debian-2)
+OpenJDK 64-Bit Server VM (build 17.0.13+11-Debian-2, mixed mode, sharing)
+
+# Enable Jenkins
+ sudo systemctl enable jenkins
+# start Jenkins
+sudo systemctl start jenkins
+#status jenkins
+sudo systemctl status jenkins
