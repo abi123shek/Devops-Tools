@@ -1,5 +1,3 @@
-#installation of trivy application on agent machine
-
 #!/bin/bash
 
 sudo apt-get update
@@ -8,3 +6,4 @@ wget https://github.com/aquasecurity/trivy/releases/download/v0.29.1/trivy_0.29.
 sudo dpkg -i trivy_0.29.1_Linux-64bit.deb
 trivy --version
 echo "downloaded Sucessfully"
+
