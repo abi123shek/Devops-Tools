@@ -17,7 +17,7 @@ Since you're using Kind, expose the ArgoCD API server using kubectl port-forward
 ``` bash  kubectl port-forward svc/argocd-server -n argocd 8080:443 ```
 
 # Step 3: Get the ArgoCD Admin Password
-``` bash kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d ```
+```  kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode ```
 
 
 
