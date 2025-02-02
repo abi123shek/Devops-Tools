@@ -10,6 +10,5 @@
 ArgoCD is a declarative, GitOps continuous delivery tool for Kubernetes. It automatically deploys applications when changes are pushed to your Git repository.
 
 # 1. Install ArgoCD on Kind Cluster
-sh "kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-"
+-run cmd: kubectl create namespace argocd kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
