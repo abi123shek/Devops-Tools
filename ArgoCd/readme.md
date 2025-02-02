@@ -18,6 +18,15 @@ Since you're using Kind, expose the ArgoCD API server using kubectl port-forward
 
 # Step 3: Get the ArgoCD Admin Password
 ```  kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode ```
+#creating App on ArgoCd
+![image](https://github.com/user-attachments/assets/23d8ee9f-13bd-414c-b59d-dad604124f8f)
+
+![image](https://github.com/user-attachments/assets/a1a9094d-85ad-4647-8bf5-1b5483cfb4ba)
+
+![image](https://github.com/user-attachments/assets/2157e709-a0d7-4d36-8003-19bc674d1847)
+
+![image](https://github.com/user-attachments/assets/230b6d3a-9a50-43e5-9fd1-606c71e5d823)
+
 
 
 
