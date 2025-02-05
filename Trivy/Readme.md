@@ -10,9 +10,9 @@ Trivy is an open-source security scanning tool designed to identify vulnerabilit
 ** File Systems: Can scan local file systems and directories.
 ** Git Repositories: Scans dependencies within Git repositories.
 
-*Fast and Efficient: Trivy operates quickly because it uses a lightweight and minimalistic approach, fetching only necessary metadata to perform scans.
+* Fast and Efficient: Trivy operates quickly because it uses a lightweight and minimalistic approach, fetching only necessary metadata to perform scans.
 
-*Multi-Layer Vulnerability Detection: It identifies vulnerabilities not just in the operating system but also in application dependencies (e.g., in language-specific libraries such as Python, Ruby, Node.js).
+* Multi-Layer Vulnerability Detection: It identifies vulnerabilities not just in the operating system but also in application dependencies (e.g., in language-specific libraries such as Python, Ruby, Node.js).
 
 
 
