@@ -6,5 +6,5 @@
 ### Installing application
 ```bash  sudo ./install_grafana.sh```
 ## Run in your browser
-```bash  http://localhost:9090```
+```bash  http://localhost:3000```
 * By default grafana port is 3000
