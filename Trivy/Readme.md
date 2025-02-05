@@ -21,3 +21,5 @@ Trivy is an open-source security scanning tool designed to identify vulnerabilit
 * Scan a container image: ```bash trivy image <image_name> ```
 * Scan a directory or file system : ``` trivy fs <directory_path> ```
 * Scan a Git repository: ``` trivy repo <repository_url> ```
+
+  
