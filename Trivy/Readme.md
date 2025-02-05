@@ -1,0 +1,2 @@
+# Overview
+Trivy is an open-source security scanning tool designed to identify vulnerabilities in container images, file systems, and Git repositories. It is lightweight and easy to use, making it ideal for developers looking to integrate security into their CI/CD pipelines. Trivy stands out for its fast and accurate scanning capabilities, supporting multiple vulnerability databases, including those for operating systems, programming languages, and container images.
