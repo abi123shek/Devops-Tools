@@ -16,3 +16,22 @@ echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
 ```bash sudo apt-get update ```
 * Install Jenkins 
 ```bash sudo apt-get install jenkins ```
+
+# Install Java Package in master 
+
+without java Jenkins could not run
+
+# installing java run time to run jenkins server
+
+* Update the System 
+``` sudo apt update ```
+* Install openjdk
+``` sudo apt install fontconfig openjdk-17-jre ```
+* Check Java Version
+``` java -version ```
+* Check openjdk Version
+``` openjdk version "17.0.13" 2024-10-15 ```
+* RunTime Environment
+``` OpenJDK Runtime Environment (build 17.0.13+11-Debian-2) ```
+* Openjdk Server
+OpenJDK 64-Bit Server VM (build 17.0.13+11-Debian-2, mixed mode, sharing)
