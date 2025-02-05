@@ -21,7 +21,7 @@ echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
 
 without java Jenkins could not run
 
-# installing java run time to run jenkins server
+# Installing java run time to run jenkins server
 
 * Update the System 
 ``` sudo apt update ```
@@ -40,7 +40,7 @@ without java Jenkins could not run
 # Install Jenkins For Node (Agent)
 in agent or node we only need to install java and openjdk
 
-# installing java run time to run jenkins server
+# Installing java run time to run jenkins server
 
 * Update the System 
 ``` sudo apt update ```
