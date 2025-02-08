@@ -1,95 +1,128 @@
+# How to Install Sonarqube in Ubuntu Linux
 
-# Step 1: Install SonarQube on Ubuntu
-SonarQube requires PostgreSQL as its database.
+### Prerequsites
 
-## 1.1 Install PostgreSQL
+### Install Postgresql 15
 
-``` sudo apt update ```
-```sudo apt install -y postgresql postgresql-contrib ```
-Start and enable PostgreSQL
-``` sudo systemctl enable --now postgresql ```
-Create a SonarQube database and user
-```sudo -i -u postgres psql ```
-Run the following PostgreSQL commands
 ```
- CREATE DATABASE sonarqube;
-CREATE USER sonar WITH ENCRYPTED PASSWORD 'sonar';
-GRANT ALL PRIVILEGES ON DATABASE sonarqube TO sonar;
+
+sudo apt update
+sudo apt upgrade
+
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+
+wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc &>/dev/null
+
+sudo apt update
+sudo apt-get -y install postgresql postgresql-contrib
+sudo systemctl enable postgresql
+
+```
+
+### Create Database for Sonarqube
+
+```
+sudo passwd postgres
+su - postgres
+
+createuser sonar
+psql 
+ALTER USER sonar WITH ENCRYPTED password 'sonar';
+CREATE DATABASE sonarqube OWNER sonar;
+grant all privileges on DATABASE sonarqube to sonar;
 \q
-```
-## 1.2 Install SonarQube
-Download and extract SonarQube
-```
-wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.3.79811.zip
-sudo apt install -y unzip
-unzip sonarqube-9.9.3.79811.zip
-sudo mv sonarqube-9.9.3.79811 /opt/sonarqube
-```
- Create a SonarQube user
-```
-sudo useradd -r -M -d /opt/sonarqube -s /bin/bash sonar
-sudo chown -R sonar:sonar /opt/sonarqube
+
+exit
 
 ```
-Configure SonarQube
+use password sonar 
+
+### Install Java 17
 ```
-sudo nano /opt/sonarqube/conf/sonar.properties
+sudo bash
+
+apt install -y wget apt-transport-https
+mkdir -p /etc/apt/keyrings
+
+wget -O - https://packages.adoptium.net/artifactory/api/gpg/key/public | tee /etc/apt/keyrings/adoptium.asc
+
+echo "deb [signed-by=/etc/apt/keyrings/adoptium.asc] https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | tee /etc/apt/sources.list.d/adoptium.list
+
+apt update
+apt install temurin-17-jdk
+update-alternatives --config java
+/usr/bin/java --version
+
+exit 
+
 ```
- Modify these lines
+
+### Increase Limits
+``` sudo vim /etc/security/limits.conf ```
+Paste the below values at the bottom of the file
+```
+sonarqube   -   nofile   65536
+sonarqube   -   nproc    4096
+```
+``` sudo vim /etc/sysctl.conf ```
+
+Paste the below values at the bottom of the file
+``` vm.max_map_count = 262144 ```
+Reboot to set the new limits
+``` sudo reboot```
+
+## Install Sonarqube
+```
+sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.0.65466.zip
+sudo apt install unzip
+sudo unzip sonarqube-9.9.0.65466.zip -d /opt
+sudo mv /opt/sonarqube-9.9.0.65466 /opt/sonarqube
+sudo groupadd sonar
+sudo useradd -c "user to run SonarQube" -d /opt/sonarqube -g sonar sonar
+sudo chown sonar:sonar /opt/sonarqube -R
+```
+Update Sonarqube properties with DB credentials
+
+``` sudo vim /opt/sonarqube/conf/sonar.properties```
+Find and replace the below values, you might need to add the sonar.jdbc.url
+uncomment this line
 ```
 sonar.jdbc.username=sonar
 sonar.jdbc.password=sonar
 sonar.jdbc.url=jdbc:postgresql://localhost:5432/sonarqube
-
 ```
-change and exit
+Create service for Sonarqube
 
-## 1.3 Create a Systemd Service for SonarQube
-Create a new service file
-
-```
-sudo nano /etc/systemd/system/sonarqube.service
-```
-Add the following content
+Paste the below into the file
 
 ```
 [Unit]
-Description=SonarQube Service
-After=network.target
+Description=SonarQube service
+After=syslog.target network.target
 
 [Service]
-Type=simple
-User=sonar
-Group=sonar
+Type=forking
+
 ExecStart=/opt/sonarqube/bin/linux-x86-64/sonar.sh start
 ExecStop=/opt/sonarqube/bin/linux-x86-64/sonar.sh stop
+
+User=sonar
+Group=sonar
 Restart=always
 
+LimitNOFILE=65536
+LimitNPROC=4096
+ 
 [Install]
 WantedBy=multi-user.target
 
 ```
-save and exit
-
-Reload systemd and start SonarQube
-
+Start Sonarqube and Enable service
 ```
-sudo systemctl daemon-reload
-sudo systemctl enable --now sonarqube
-
+sudo systemctl start sonar
+sudo systemctl enable sonar
+sudo systemctl status sonar
+sudo tail -f /opt/sonarqube/logs/sonar.log
 ```
-
-## 1.4 Access SonarQube
-Check if SonarQube is running
-```
-sudo systemctl status sonarqube
-
-```
-If running, open http://localhost:9000 in your browser.
-
-Default username: admin
-Default password: admin
-Change the password after the first login.
-
-
-
+## Access the Sonarqube UI
+``` http://<IP>:9000 ```
